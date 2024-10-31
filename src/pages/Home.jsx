@@ -63,7 +63,7 @@ const Home = () => {
     <>
         <ToastContainer />
       {loading ? (
-        <div id='loder' className='h-12 w-12 bg-green-700 absolute top-[50%] bottom-[50%] rounded-tl-full rounded-br-full shadow-md shadow-blue-300 animate-spin '>
+        <div id='loder' className='h-12 w-12 bg-green-700 absolute top-[50%] bottom-[50%] left-[50%] right-[50%] rounded-tl-full rounded-br-full shadow-md shadow-blue-300 animate-spin '>
         </div>) : (
         <div className='mt-10 flex flex-col justify-center mx-4'>
           <h2 className='text-3xl font-medium mb-10'>Recents Post</h2>
