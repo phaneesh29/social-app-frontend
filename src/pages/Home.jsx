@@ -72,7 +72,7 @@ const Home = () => {
 
             {
               posts.map((post) => (
-                <div key={post._id} className=' flex flex-col justify-center gap-3 bg-slate-700 p-2 text-white rounded-lg'>
+                <div key={post._id} className='w-[320px] sm:w-full flex flex-col justify-center gap-3 bg-slate-700 p-2 text-white rounded-lg'>
                   <h3 className='text-2xl font-semibold text-center'>{post.title}</h3>
                   <p className='text-xl bg-slate-600 p-2 rounded-lg'>{post.content}</p>
                   {post.file && (
