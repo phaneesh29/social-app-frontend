@@ -14,14 +14,21 @@ const Createpost = () => {
 
     const [btnText, setBtnText] = useState("Post")
 
-    const notify = () => {
-        toast.success('Posted SuccessFully!', {
-          position: "top-right",
-          autoClose: 3000, 
-          theme:"dark"
+    const notify = (message) => {
+        toast.success(message, {
+            position: "top-right",
+            autoClose: 3000,
+            theme: "dark"
         });
-      };
+    };
 
+    const invalidNotify = (message)=>{
+        toast.warn(message,{
+            position:"top-right",
+            autoClose:3000,
+            theme:"dark"
+        })
+    }
 
     const handleInputChange = (event) => {
         const { name, value } = event.target
@@ -35,19 +42,23 @@ const Createpost = () => {
 
     const handlePostSubmit = async () => {
         try {
+            if ((!newPost.title) && (!newPost.content)) {
+                invalidNotify("Please enter Valid input")
+                return
+            }
             const formData = new FormData();
             formData.append("title", newPost.title)
             formData.append("content", newPost.content)
             formData.append("file", newPost.file)
-            
+
             setBtnText("Posting...")
-            const response = await axios.post("https://social-app-backend-i4s4.onrender.com/api/posts",formData)
-            notify()
-            
-            setNewPost({title:"",content:"",file:null})
+            const response = await axios.post("https://social-app-backend-i4s4.onrender.com/api/posts", formData)
+            notify("Posted Successfully")
+
+            setNewPost({ title: "", content: "", file: null })
             setBtnText("Post")
 
-        } 
+        }
         catch (error) {
             console.error("Error creating post:", error)
         }
@@ -55,7 +66,7 @@ const Createpost = () => {
 
     return (
         <>
-        <ToastContainer />
+            <ToastContainer />
             <div className="bg-slate-400 text-black my-5 mx-9 rounded-lg p-3 flex flex-col justify-center gap-4">
                 <h2 className='text-3xl border-b-4 border-gray-500 text-center'>Create a Post</h2>
                 <input required type="text" name='title' placeholder='Title' value={newPost.title} onChange={handleInputChange} className='p-3 rounded-xl text-xl focus:outline-none focus:ring-2 focus:ring-green-700' />

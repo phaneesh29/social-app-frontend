@@ -18,6 +18,15 @@ const Home = () => {
     });
   };
 
+  const invalidNotify = (message)=>{
+    toast.warn(message,{
+        position:"top-right",
+        autoClose:3000,
+        theme:"dark"
+    })
+}
+
+
   useEffect(() => {
     axios.get("https://social-app-backend-i4s4.onrender.com/api/posts").then((response) => {
       console.log(response.data.posts)
@@ -44,6 +53,10 @@ const Home = () => {
   };
 
   const handleAddComment = (postId, commentText) => {
+    if (!commentText){
+      invalidNotify("Empty Input")
+      return
+    } 
     axios
       .post(`https://social-app-backend-i4s4.onrender.com/api/posts/comment/${postId}`, {
         text: commentText,
@@ -77,7 +90,7 @@ const Home = () => {
                   <p className='text-xl bg-slate-600 p-2 rounded-lg'>{post.content}</p>
                   {post.file && (
                     <div className='bg-teal-900 text-white p-2 text-base rounded-lg'>
-                      <a href={`https://social-app-backend-i4s4.onrender.com/uploads/${post.file}`} target='_blank'>Open or Download</a>
+                      <a href={`https://social-app-backend-i4s4.onrender.com/uploads/${post.file}`} target='_blank'>Open or Download <span className='bg-blue-700 p-1 rounded-lg'>File</span></a>
                     </div>
                   )}
                   <div className='flex gap-5 text-xl items-center '><p>Likes: {post.likes}</p><button onClick={() => handleLike(post._id)}><AiFillLike size={"25px"} /></button></div>
